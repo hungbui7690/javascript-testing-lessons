@@ -1,13 +1,17 @@
 /*
-  Support Async Tests with JavaScript Promises through async await P3
-  
+  Provide Testing Helper Functions as Globals in JavaScript
+  - the testing function we create is useful > so we will put it in a module to reuse
+
+    (1) create globals.js
+    (2) to run 
+        > node --require .\globals.js .\app.js
+
 */
 
 const { sumAsync, subtractAsync, sum, subtract } = require('./math')
 
 let result, expected
 
-// (***) use sync function again > everything is ok
 test('Sum Test', () => {
   result = sum(3, 7)
   expected = 10
@@ -20,26 +24,3 @@ test('Subtract Test', () => {
   expected = -4
   expect(result).toBe(expected)
 })
-
-///////////////////////////////////////
-
-// (***)
-async function test(title, callback) {
-  try {
-    await callback()
-    console.log(`✔ ${title}`)
-  } catch (error) {
-    console.error(`❌ ${title}`)
-    console.error(error)
-  }
-}
-
-function expect(actual) {
-  return {
-    toBe(expected) {
-      if (actual !== expected) {
-        throw new Error(`${result} is not equal to ${expected}`)
-      }
-    },
-  }
-}

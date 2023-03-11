@@ -1,26 +1,38 @@
 /*
-  Abstract Test Assertions into a JavaScript Assertion Library
-  - we try to simulate expect function of testing library
+  Encapsulate and Isolate Tests by building a JavaScript Testing Framework
+  - right now, if we have cannot pass the first test > the 2nd test cannot be run
 */
 
 const { sum, subtract } = require('./math')
 
 let result, expected
 
-result = sum(3, 7)
-expected = 10
+// (2a)
+test('Sum Test', () => {
+  result = sum(3, 7)
+  expected = 10
 
-expect(result).toBe(expected) // (2a)
+  expect(result).toBe(expected)
+})
 
-/////////////////////////////////
-
-result = subtract(3, 7)
-expected = -1
-expect(result).toBe(expected) // (2b) right now, we cannot see the result of this since 2a throws error
-
-/////////////////////////////////
+// (2b) now, if we run again, we can see both test
+test('Subtract Test', () => {
+  result = subtract(3, 7)
+  expected = -4
+  expect(result).toBe(expected)
+})
 
 // (1)
+function test(title, callback) {
+  try {
+    callback()
+    console.log(`✔ ${title}`)
+  } catch (error) {
+    console.error(`❌ ${title}`)
+    console.error(error)
+  }
+}
+
 function expect(actual) {
   return {
     toBe(expected) {

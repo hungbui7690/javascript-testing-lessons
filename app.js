@@ -1,15 +1,13 @@
 /*
-  Support Async Tests with JavaScript Promises through async await P1
-  - returns wrong test
+  Support Async Tests with JavaScript Promises through async await P2
+  - we need to turn test() into async await as well since the callback function returns promise
 
 */
 
-// (1)
 const { sumAsync, subtractAsync } = require('./math')
 
 let result, expected
 
-// (2a) change to async/await
 test('Sum Test', async () => {
   result = await sumAsync(3, 7)
   expected = 10
@@ -17,7 +15,6 @@ test('Sum Test', async () => {
   expect(result).toBe(expected)
 })
 
-// (2b)
 test('Subtract Test', async () => {
   result = await subtractAsync(3, 7)
   expected = -4
@@ -26,9 +23,10 @@ test('Subtract Test', async () => {
 
 ///////////////////////////////////////
 
-function test(title, callback) {
+// (***)
+async function test(title, callback) {
   try {
-    callback()
+    await callback()
     console.log(`✔ ${title}`)
   } catch (error) {
     console.error(`❌ ${title}`)

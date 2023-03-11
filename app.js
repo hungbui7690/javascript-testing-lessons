@@ -1,28 +1,31 @@
 /*
-  Encapsulate and Isolate Tests by building a JavaScript Testing Framework
-  - right now, if we have cannot pass the first test > the 2nd test cannot be run
+  Support Async Tests with JavaScript Promises through async await P1
+  - returns wrong test
+
 */
 
-const { sum, subtract } = require('./math')
+// (1)
+const { sumAsync, subtractAsync } = require('./math')
 
 let result, expected
 
-// (2a)
-test('Sum Test', () => {
-  result = sum(3, 7)
+// (2a) change to async/await
+test('Sum Test', async () => {
+  result = await sumAsync(3, 7)
   expected = 10
 
   expect(result).toBe(expected)
 })
 
-// (2b) now, if we run again, we can see both test
-test('Subtract Test', () => {
-  result = subtract(3, 7)
+// (2b)
+test('Subtract Test', async () => {
+  result = await subtractAsync(3, 7)
   expected = -4
   expect(result).toBe(expected)
 })
 
-// (1)
+///////////////////////////////////////
+
 function test(title, callback) {
   try {
     callback()
